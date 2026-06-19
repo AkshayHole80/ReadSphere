@@ -1,0 +1,145 @@
+=================================================
+BOOK STORE REPORT
+=================================================
+Total Books : 21
+Total Inventory : 296
+Total Inventory Value : 245125.0
+Average Book Price : 894.95
+Highest Priced Book : Introduction to Algorithms
+Lowest Priced Book : Head First Java
+
+=================================================
+BOOK CATEGORIES
+=================================================
+DevOps : 3
+Interview Prep : 1
+Algorithms : 2
+System Design : 1
+Architecture : 3
+JavaScript : 1
+Programming : 7
+Spring : 1
+Software Design : 2
+
+=================================================
+AVERAGE PRICE BY CATEGORY
+=================================================
+DevOps : ₹933.33
+Interview Prep : ₹900.00
+Algorithms : ₹1100.00
+System Design : ₹950.00
+Architecture : ₹1200.00
+JavaScript : ₹650.00
+Programming : ₹713.57
+Spring : ₹850.00
+Software Design : ₹924.50
+
+=================================================
+AUTHOR AND THEIR BOOKS
+=================================================
+Chris Richardson
+   - Microservices Patterns
+
+Aditya Bhargava
+   - Grokking Algorithms
+
+Robert C. Martin
+   - Clean Code
+
+Martin Fowler
+   - Refactoring
+
+Andrew Hunt
+   - The Pragmatic Programmer
+
+Kyle Simpson
+   - You Dont Know JS
+
+Gayle Laakmann McDowell
+   - Cracking the Coding Interview
+
+Laurentiu Spilca
+   - Spring Start Here
+
+Craig Walls
+   - Spring in Action
+   - Spring Boot Guide
+
+Joshua Bloch
+   - Effective Java
+
+Kathy Sierra
+   - Head First Java
+
+Gene Kim
+   - The Phoenix Project
+
+Alex Xu
+   - System Design Interview
+
+Nigel Poulton
+   - Docker Deep Dive
+
+Brian Goetz
+   - Java Concurrency in Practice
+
+Eric Evans
+   - Domain Driven Design
+
+Sam Newman
+   - Building Microservices
+
+Kelsey Hightower
+   - Kubernetes Up and Running
+
+Thomas H. Cormen
+   - Introduction to Algorithms
+
+Erich Gamma
+   - Design Patterns
+
+=================================================
+PUBLISHER AND THEIR BOOKS
+=================================================
+Addison-Wesley
+   - Effective Java
+   - Java Concurrency in Practice
+   - Refactoring
+   - Domain Driven Design
+
+Pearson
+   - Design Patterns
+   - The Pragmatic Programmer
+
+MIT Press
+   - Introduction to Algorithms
+
+Independently Published
+   - System Design Interview
+   - Docker Deep Dive
+
+OReilly
+   - Head First Java
+   - You Dont Know JS
+   - Building Microservices
+   - Kubernetes Up and Running
+
+Manning
+   - Spring in Action
+   - Microservices Patterns
+   - Grokking Algorithms
+   - Spring Start Here
+   - Spring Boot Guide
+
+IT Revolution
+   - The Phoenix Project
+
+Prentice Hall
+   - Clean Code
+
+CareerCup
+   - Cracking the Coding Interview
+
+=================================================
+END OF REPORT
+=================================================
