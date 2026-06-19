@@ -10,5 +10,4 @@ public interface BookService {
     List<BookDto> getBooks();
     BookDto getBookById(Long id);
     BookDto addBook(BookPostDto bookPostDto);
-    BookReportDto generateReport();
- }
+  }

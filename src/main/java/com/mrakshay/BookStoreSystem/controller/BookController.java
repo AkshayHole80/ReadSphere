@@ -31,8 +31,5 @@ public class BookController {
     public BookDto addBook(@RequestBody BookPostDto bookPostDto) {
         return bookService.addBook(bookPostDto);
     }
-    @GetMapping("/report")
-    public BookReportDto generateReport() {
-        return bookService.generateReport();
-    }
+
 }
