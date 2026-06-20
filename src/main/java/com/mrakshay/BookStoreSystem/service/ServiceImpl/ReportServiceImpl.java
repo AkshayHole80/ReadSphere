@@ -2,10 +2,12 @@ package com.mrakshay.BookStoreSystem.service.ServiceImpl;
 
 import com.mrakshay.BookStoreSystem.dto.BookDto;
 import com.mrakshay.BookStoreSystem.dto.BookReportDto;
+import com.mrakshay.BookStoreSystem.exception.CsvFileException;
 import com.mrakshay.BookStoreSystem.service.BookService;
 import com.mrakshay.BookStoreSystem.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedWriter;
@@ -21,8 +23,13 @@ public class ReportServiceImpl implements ReportService {
 
     private final BookService bookService;
 
+    @Value("${report.file.path}")
+    private String reportFilePath;
+
     @Override
     public BookReportDto generateReport() {
+
+        log.info("Generating book report");
 
         List<BookDto> books = bookService.getBooks();
 
@@ -96,14 +103,19 @@ public class ReportServiceImpl implements ReportService {
                                         BookDto::getBookName,
                                         Collectors.toList())))
         );
+
         generateTxtReport(report);
+
+        log.info("Book report generated successfully");
+
         return report;
     }
 
     private void generateTxtReport(BookReportDto report) {
 
         try (BufferedWriter writer =
-                     new BufferedWriter(new FileWriter("book-report.txt"))) {
+                     new BufferedWriter(
+                             new FileWriter(reportFilePath))) {
 
             writer.write("=================================================");
             writer.newLine();
@@ -132,7 +144,6 @@ public class ReportServiceImpl implements ReportService {
             writer.newLine();
             writer.newLine();
 
-            // Category Report
             writer.write("=================================================");
             writer.newLine();
             writer.write("BOOK CATEGORIES");
@@ -147,7 +158,6 @@ public class ReportServiceImpl implements ReportService {
 
             writer.newLine();
 
-            // Average Price By Category
             writer.write("=================================================");
             writer.newLine();
             writer.write("AVERAGE PRICE BY CATEGORY");
@@ -163,7 +173,6 @@ public class ReportServiceImpl implements ReportService {
 
             writer.newLine();
 
-            // Author Report
             writer.write("=================================================");
             writer.newLine();
             writer.write("AUTHOR AND THEIR BOOKS");
@@ -184,7 +193,6 @@ public class ReportServiceImpl implements ReportService {
                 writer.newLine();
             }
 
-            // Publisher Report
             writer.write("=================================================");
             writer.newLine();
             writer.write("PUBLISHER AND THEIR BOOKS");
@@ -211,8 +219,14 @@ public class ReportServiceImpl implements ReportService {
             writer.newLine();
             writer.write("=================================================");
 
+            log.info("TXT report generated successfully at {}", reportFilePath);
+
         } catch (Exception e) {
-            throw new RuntimeException("Error generating TXT report", e);
+
+            log.error("Error generating TXT report", e);
+
+            throw new CsvFileException(
+                    "Error generating TXT report");
         }
     }
 }

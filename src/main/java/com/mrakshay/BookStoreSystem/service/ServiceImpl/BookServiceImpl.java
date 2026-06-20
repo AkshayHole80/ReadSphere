@@ -2,41 +2,43 @@ package com.mrakshay.BookStoreSystem.service.ServiceImpl;
 
 import com.mrakshay.BookStoreSystem.dto.BookDto;
 import com.mrakshay.BookStoreSystem.dto.BookPostDto;
-import com.mrakshay.BookStoreSystem.dto.BookReportDto;
 import com.mrakshay.BookStoreSystem.entity.Book;
+import com.mrakshay.BookStoreSystem.exception.BookNotFoundException;
+import com.mrakshay.BookStoreSystem.exception.CsvFileException;
+import com.mrakshay.BookStoreSystem.exception.InvalidBookDataException;
 import com.mrakshay.BookStoreSystem.service.BookService;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookServiceImpl implements BookService {
 
     private final ModelMapper modelMapper;
+
     @Value("${csv.file.path}")
     private String csvFilePath;
 
-
-  @Override
+    @Override
     public List<BookDto> getBooks() {
+
+        log.info("Fetching all books");
 
         List<BookDto> bookDtos = new ArrayList<>();
 
-        try {
-            CSVReader reader = new CSVReader(
-                    new java.io.FileReader(csvFilePath));
+        try (CSVReader reader = new CSVReader(
+                new FileReader(csvFilePath))) {
 
             List<String[]> rows = reader.readAll();
 
@@ -60,19 +62,33 @@ public class BookServiceImpl implements BookService {
                 bookDtos.add(modelMapper.map(book, BookDto.class));
             }
 
-        } catch (Exception e) {
-            throw new RuntimeException("Error reading CSV file", e);
-        }
+            log.info("Successfully fetched {} books", bookDtos.size());
 
-        return bookDtos;
+            return bookDtos;
+
+        } catch (Exception e) {
+
+            log.error("Error while reading CSV file", e);
+
+            throw new CsvFileException(
+                    "Error reading CSV file");
+        }
     }
 
     @Override
     public BookDto getBookById(Long id) {
-        return getBooks().stream()
-                .filter(bookDto -> bookDto.getId().equals(id))
+
+        log.info("Fetching book with id {}", id);
+
+        return getBooks()
+                .stream()
+                .filter(book -> book.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
+                .orElseThrow(() -> {
+                    log.error("Book not found with id {}", id);
+                    return new BookNotFoundException(
+                            "Book not found with id: " + id);
+                });
     }
 
     private void writeBookToCsv(Book book) {
@@ -95,14 +111,44 @@ public class BookServiceImpl implements BookService {
 
             writer.writeNext(row);
 
+            log.info("Book successfully written to CSV with id {}",
+                    book.getId());
+
         } catch (Exception e) {
-            throw new RuntimeException("Error writing to CSV", e);
+
+            log.error("Error while writing CSV file", e);
+
+            throw new CsvFileException(
+                    "Error writing CSV file");
         }
     }
+
     @Override
     public BookDto addBook(BookPostDto bookPostDto) {
 
-        Book book = modelMapper.map(bookPostDto, Book.class);
+        log.info("Adding new book {}",
+                bookPostDto.getBookName());
+
+        if (bookPostDto.getPrice() <= 0) {
+            throw new InvalidBookDataException(
+                    "Price must be greater than zero");
+        }
+
+        if (bookPostDto.getQuantity() < 0) {
+            throw new InvalidBookDataException(
+                    "Quantity cannot be negative");
+        }
+
+        if (bookPostDto.getBookName() == null
+                || bookPostDto.getBookName().isBlank()) {
+
+            throw new InvalidBookDataException(
+                    "Book name cannot be empty");
+        }
+
+        Book book = modelMapper.map(
+                bookPostDto,
+                Book.class);
 
         Long nextId = getBooks()
                 .stream()
@@ -114,10 +160,11 @@ public class BookServiceImpl implements BookService {
 
         writeBookToCsv(book);
 
-        return modelMapper.map(book, BookDto.class);
+        log.info("Book added successfully with id {}",
+                nextId);
+
+        return modelMapper.map(
+                book,
+                BookDto.class);
     }
-
-
-
-
 }
