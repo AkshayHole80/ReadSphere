@@ -19,6 +19,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -167,4 +168,134 @@ public class BookServiceImpl implements BookService {
                 book,
                 BookDto.class);
     }
+
+    private void rewriteCsv(List<Book> books) {
+
+        try (CSVWriter writer =
+                     new CSVWriter(new FileWriter(csvFilePath))) {
+
+            writer.writeNext(new String[]{
+                    "id",
+                    "bookName",
+                    "authorName",
+                    "category",
+                    "publisher",
+                    "price",
+                    "quantity",
+                    "publishedYear",
+                    "isbn",
+                    "language"
+            });
+
+            for (Book book : books) {
+
+                writer.writeNext(new String[]{
+                        String.valueOf(book.getId()),
+                        book.getBookName(),
+                        book.getAuthorName(),
+                        book.getCategory(),
+                        book.getPublisher(),
+                        String.valueOf(book.getPrice()),
+                        String.valueOf(book.getQuantity()),
+                        String.valueOf(book.getPublishedYear()),
+                        book.getIsbn(),
+                        book.getLanguage()
+                });
+            }
+
+        } catch (Exception e) {
+
+            throw new CsvFileException(
+                    "Error updating CSV file");
+        }
+    }
+
+    @Override
+    public BookDto updateBook(
+            Long id,
+            BookPostDto bookPostDto) {
+
+        log.info("Updating book with id {}", id);
+
+        List<Book> books = getBooks()
+                .stream()
+                .map(bookDto ->
+                        modelMapper.map(bookDto, Book.class))
+                .toList();
+
+        Book existingBook = books.stream()
+                .filter(book -> book.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() ->
+                        new BookNotFoundException("Book Not Fount With Id :"+id));
+
+        existingBook.setBookName(bookPostDto.getBookName());
+        existingBook.setAuthorName(bookPostDto.getAuthorName());
+        existingBook.setCategory(bookPostDto.getCategory());
+        existingBook.setPublisher(bookPostDto.getPublisher());
+        existingBook.setPrice(bookPostDto.getPrice());
+        existingBook.setQuantity(bookPostDto.getQuantity());
+        existingBook.setPublishedYear(bookPostDto.getPublishedYear());
+        existingBook.setIsbn(bookPostDto.getIsbn());
+        existingBook.setLanguage(bookPostDto.getLanguage());
+
+        rewriteCsv(books);
+
+        return modelMapper.map(
+                existingBook,
+                BookDto.class);
+    }
+
+    @Override
+    public void deleteBook(Long id) {
+
+        log.info("Deleting book with id {}", id);
+
+        List<Book> books = getBooks()
+                .stream()
+                .map(bookDto ->
+                        modelMapper.map(bookDto, Book.class))
+                .collect(Collectors.toList());
+
+        boolean removed =
+                books.removeIf(book ->
+                        book.getId().equals(id));
+
+        if (!removed) {
+
+            throw new BookNotFoundException(
+                    "Book not found with id: " + id);
+        }
+
+        rewriteCsv(books);
+
+        log.info("Book deleted successfully with id: {}",id);
+    }
+
+    @Override
+    public List<BookDto> getBooksByCategory(String category) {
+
+        log.info("Fetching books by category {}", category);
+
+        return getBooks()
+                .stream()
+                .filter(book ->
+                        book.getCategory()
+                                .equalsIgnoreCase(category))
+                .toList();
+    }
+
+    @Override
+    public List<BookDto> getBooksByAuthor(String author) {
+
+        log.info("Fetching books by author {}", author);
+
+        return getBooks()
+                .stream()
+                .filter(book ->
+                        book.getAuthorName()
+                                .equalsIgnoreCase(author))
+                .toList();
+    }
+
 }

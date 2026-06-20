@@ -32,4 +32,39 @@ public class BookController {
         return bookService.addBook(bookPostDto);
     }
 
+
+    @GetMapping("/category/{category}")
+    public List<BookDto> getBooksByCategory(
+            @PathVariable String category) {
+
+        return bookService
+                .getBooksByCategory(category);
+    }
+
+    @GetMapping("/author/{author}")
+    public List<BookDto> getBooksByAuthor(
+            @PathVariable String author) {
+
+        return bookService
+                .getBooksByAuthor(author);
+    }
+
+    @PutMapping("/{id}")
+    public BookDto updateBook(
+            @PathVariable Long id,
+            @RequestBody BookPostDto bookPostDto) {
+
+        return bookService.updateBook(id, bookPostDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteBook(
+            @PathVariable Long id) {
+
+        bookService.deleteBook(id);
+
+        return "Book deleted successfully";
+    }
+
+
 }
