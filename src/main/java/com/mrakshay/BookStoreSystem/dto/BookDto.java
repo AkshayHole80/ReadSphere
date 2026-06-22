@@ -1,7 +1,11 @@
 package com.mrakshay.BookStoreSystem.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @JsonPropertyOrder({
         "id",
         "bookName",
@@ -15,6 +19,9 @@ import lombok.Data;
         "language"
 })
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookDto {
 
     private Long id;
