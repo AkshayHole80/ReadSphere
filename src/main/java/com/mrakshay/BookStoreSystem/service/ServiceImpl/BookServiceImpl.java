@@ -221,7 +221,7 @@ public class BookServiceImpl implements BookService {
                 .stream()
                 .map(bookDto ->
                         modelMapper.map(bookDto, Book.class))
-                .toList();
+                .collect(Collectors.toList());
 
         Book existingBook = books.stream()
                 .filter(book -> book.getId().equals(id))
