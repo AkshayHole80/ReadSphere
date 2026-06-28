@@ -3,6 +3,7 @@ package com.mrakshay.BookStoreSystem.controller;
 import com.mrakshay.BookStoreSystem.dto.BookDto;
 import com.mrakshay.BookStoreSystem.dto.BookPostDto;
 import com.mrakshay.BookStoreSystem.dto.BookReportDto;
+import com.mrakshay.BookStoreSystem.dto.PageResponse;
 import com.mrakshay.BookStoreSystem.service.BookService;
 import com.mrakshay.BookStoreSystem.service.ServiceImpl.BookServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,11 +24,6 @@ public class BookController {
 
     private final BookService bookService;
 
-   @Operation(summary = "Get all books")
-    @GetMapping
-    public  ResponseEntity<List<BookDto>> getAllBooks() {
-        return ResponseEntity.ok(bookService.getBooks());
-    }
 
     @Operation(summary = "Get book by id")
     @GetMapping("/{id}")
@@ -81,6 +77,16 @@ public class BookController {
         bookService.deleteBook(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Get all books with pagination")
+    @GetMapping
+    public ResponseEntity<PageResponse<BookDto>> getAllBooks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+
+        return ResponseEntity.ok(
+                bookService.getBooks(page, size));
     }
 
 

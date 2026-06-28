@@ -2,6 +2,7 @@ package com.mrakshay.BookStoreSystem.service.ServiceImpl;
 
 import com.mrakshay.BookStoreSystem.dto.BookDto;
 import com.mrakshay.BookStoreSystem.dto.BookPostDto;
+import com.mrakshay.BookStoreSystem.dto.PageResponse;
 import com.mrakshay.BookStoreSystem.entity.Book;
 import com.mrakshay.BookStoreSystem.exception.BookNotFoundException;
 import com.mrakshay.BookStoreSystem.exception.CsvFileException;
@@ -74,6 +75,49 @@ public class BookServiceImpl implements BookService {
             throw new CsvFileException(
                     "Error reading CSV file");
         }
+    }
+
+    @Override
+    public PageResponse<BookDto> getBooks(int page, int size) {
+
+        log.info("Fetching books with page {} and size {}", page, size);
+
+        if (page < 0) {
+            throw new InvalidBookDataException(
+                    "Page number cannot be negative");
+        }
+
+        if (size <= 0) {
+            throw new InvalidBookDataException(
+                    "Page size must be greater than zero");
+        }
+
+        List<BookDto> books = getBooks();
+
+        int totalElements = books.size();
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        int start = page * size;
+
+        if (start >= totalElements) {
+            return new PageResponse<>(
+                    List.of(),
+                    page,
+                    size,
+                    totalElements,
+                    totalPages
+            );
+        }
+
+        int end = Math.min(start + size, totalElements);
+
+        return new PageResponse<>(
+                books.subList(start, end),
+                page,
+                size,
+                totalElements,
+                totalPages
+        );
     }
 
     @Override

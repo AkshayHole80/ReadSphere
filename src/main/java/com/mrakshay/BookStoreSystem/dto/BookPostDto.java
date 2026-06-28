@@ -4,11 +4,13 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.validator.constraints.UniqueElements;
 
 @Data
 public class BookPostDto {
 
     @NotBlank(message = "Book name is required")
+    @UniqueElements(message = "Book name must be unique")
     private String bookName;
 
     @NotBlank(message = "Author name is required")

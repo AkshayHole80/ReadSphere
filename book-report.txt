@@ -1,10 +1,10 @@
 =================================================
 BOOK STORE REPORT
 =================================================
-Total Books : 21
-Total Inventory : 296
-Total Inventory Value : 245125.0
-Average Book Price : 894.95
+Total Books : 20
+Total Inventory : 286
+Total Inventory Value : 237135.0
+Average Book Price : 899.75
 Highest Priced Book : Introduction to Algorithms
 Lowest Priced Book : Head First Java
 
@@ -17,7 +17,7 @@ Algorithms : 2
 System Design : 1
 Architecture : 3
 JavaScript : 1
-Programming : 7
+Programming : 6
 Spring : 1
 Software Design : 2
 
@@ -30,7 +30,7 @@ Algorithms : ₹1100.00
 System Design : ₹950.00
 Architecture : ₹1200.00
 JavaScript : ₹650.00
-Programming : ₹713.57
+Programming : ₹699.33
 Spring : ₹850.00
 Software Design : ₹924.50
 
@@ -63,7 +63,6 @@ Laurentiu Spilca
 
 Craig Walls
    - Spring in Action
-   - Spring Boot Guide
 
 Joshua Bloch
    - Effective Java
@@ -129,7 +128,6 @@ Manning
    - Microservices Patterns
    - Grokking Algorithms
    - Spring Start Here
-   - Spring Boot Guide
 
 IT Revolution
    - The Phoenix Project
