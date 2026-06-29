@@ -1,7 +1,7 @@
 package com.mrakshay.BookStoreSystem.controller;
 
 
-import com.mrakshay.BookStoreSystem.dto.BookReportDto;
+import com.mrakshay.BookStoreSystem.dto.response.BookReportDto;
 import com.mrakshay.BookStoreSystem.service.ReportService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

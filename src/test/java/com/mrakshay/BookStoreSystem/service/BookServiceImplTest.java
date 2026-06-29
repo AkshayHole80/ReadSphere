@@ -1,6 +1,6 @@
 package com.mrakshay.BookStoreSystem.service;
 
-import com.mrakshay.BookStoreSystem.dto.BookDto;
+import com.mrakshay.BookStoreSystem.dto.request.BookDto;
 import com.mrakshay.BookStoreSystem.exception.BookNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

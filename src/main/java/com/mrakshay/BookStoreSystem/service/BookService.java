@@ -1,9 +1,8 @@
 package com.mrakshay.BookStoreSystem.service;
 
-import com.mrakshay.BookStoreSystem.dto.BookDto;
-import com.mrakshay.BookStoreSystem.dto.BookPostDto;
-import com.mrakshay.BookStoreSystem.dto.BookReportDto;
-import com.mrakshay.BookStoreSystem.dto.PageResponse;
+import com.mrakshay.BookStoreSystem.dto.request.BookDto;
+import com.mrakshay.BookStoreSystem.dto.request.BookPostDto;
+import com.mrakshay.BookStoreSystem.dto.response.PageResponse;
 
 import java.util.List;
 

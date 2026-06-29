@@ -1,4 +1,4 @@
-package com.mrakshay.BookStoreSystem.dto;
+package com.mrakshay.BookStoreSystem.dto.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

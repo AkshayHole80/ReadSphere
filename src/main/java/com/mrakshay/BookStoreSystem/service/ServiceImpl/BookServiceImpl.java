@@ -1,8 +1,8 @@
 package com.mrakshay.BookStoreSystem.service.ServiceImpl;
 
-import com.mrakshay.BookStoreSystem.dto.BookDto;
-import com.mrakshay.BookStoreSystem.dto.BookPostDto;
-import com.mrakshay.BookStoreSystem.dto.PageResponse;
+import com.mrakshay.BookStoreSystem.dto.request.BookDto;
+import com.mrakshay.BookStoreSystem.dto.request.BookPostDto;
+import com.mrakshay.BookStoreSystem.dto.response.PageResponse;
 import com.mrakshay.BookStoreSystem.entity.Book;
 import com.mrakshay.BookStoreSystem.exception.BookNotFoundException;
 import com.mrakshay.BookStoreSystem.exception.CsvFileException;

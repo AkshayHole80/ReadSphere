@@ -1,7 +1,7 @@
 package com.mrakshay.BookStoreSystem.service.ServiceImpl;
 
-import com.mrakshay.BookStoreSystem.dto.BookDto;
-import com.mrakshay.BookStoreSystem.dto.BookReportDto;
+import com.mrakshay.BookStoreSystem.dto.request.BookDto;
+import com.mrakshay.BookStoreSystem.dto.response.BookReportDto;
 import com.mrakshay.BookStoreSystem.exception.CsvFileException;
 import com.mrakshay.BookStoreSystem.service.BookService;
 import com.mrakshay.BookStoreSystem.service.ReportService;

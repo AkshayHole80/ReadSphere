@@ -1,4 +1,4 @@
-package com.mrakshay.BookStoreSystem.dto;
+package com.mrakshay.BookStoreSystem.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;

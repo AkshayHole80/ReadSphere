@@ -1,4 +1,4 @@
-package com.mrakshay.BookStoreSystem.dto;
+package com.mrakshay.BookStoreSystem.dto.response;
 
 import lombok.Data;
 

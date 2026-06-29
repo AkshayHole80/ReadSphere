@@ -1,11 +1,9 @@
 package com.mrakshay.BookStoreSystem.controller;
 
-import com.mrakshay.BookStoreSystem.dto.BookDto;
-import com.mrakshay.BookStoreSystem.dto.BookPostDto;
-import com.mrakshay.BookStoreSystem.dto.BookReportDto;
-import com.mrakshay.BookStoreSystem.dto.PageResponse;
+import com.mrakshay.BookStoreSystem.dto.request.BookDto;
+import com.mrakshay.BookStoreSystem.dto.request.BookPostDto;
+import com.mrakshay.BookStoreSystem.dto.response.PageResponse;
 import com.mrakshay.BookStoreSystem.service.BookService;
-import com.mrakshay.BookStoreSystem.service.ServiceImpl.BookServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
