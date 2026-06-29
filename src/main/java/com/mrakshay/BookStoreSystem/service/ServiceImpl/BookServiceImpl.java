@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.FileReader;
@@ -77,6 +79,10 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @Cacheable(
+            value = "books",
+            key = "#page + '-' + #size"
+    )
     @Override
     public PageResponse<BookDto> getBooks(int page, int size) {
 
@@ -120,6 +126,7 @@ public class BookServiceImpl implements BookService {
         );
     }
 
+    @Cacheable(value = "book", key = "#id")
     @Override
     public BookDto getBookById(Long id) {
 
@@ -168,6 +175,16 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @CacheEvict(
+            value = {
+                    "books",
+                    "book",
+                    "booksByCategory",
+                    "booksByAuthor",
+                    "report"
+            },
+            allEntries = true
+    )
     @Override
     public BookDto addBook(BookPostDto bookPostDto) {
 
@@ -254,6 +271,16 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @CacheEvict(
+            value = {
+                    "books",
+                    "book",
+                    "booksByCategory",
+                    "booksByAuthor",
+                    "report"
+            },
+            allEntries = true
+    )
     @Override
     public BookDto updateBook(
             Long id,
@@ -290,6 +317,16 @@ public class BookServiceImpl implements BookService {
                 BookDto.class);
     }
 
+    @CacheEvict(
+            value = {
+                    "books",
+                    "book",
+                    "booksByCategory",
+                    "booksByAuthor",
+                    "report"
+            },
+            allEntries = true
+    )
     @Override
     public void deleteBook(Long id) {
 
@@ -316,6 +353,7 @@ public class BookServiceImpl implements BookService {
         log.info("Book deleted successfully with id: {}",id);
     }
 
+    @Cacheable(value = "booksByCategory", key = "#category")
     @Override
     public List<BookDto> getBooksByCategory(String category) {
 
@@ -329,6 +367,7 @@ public class BookServiceImpl implements BookService {
                 .toList();
     }
 
+    @Cacheable(value = "booksByAuthor", key = "#author")
     @Override
     public List<BookDto> getBooksByAuthor(String author) {
 

@@ -10,7 +10,6 @@ import org.hibernate.validator.constraints.UniqueElements;
 public class BookPostDto {
 
     @NotBlank(message = "Book name is required")
-    @UniqueElements(message = "Book name must be unique")
     private String bookName;
 
     @NotBlank(message = "Author name is required")

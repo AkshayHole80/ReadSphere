@@ -8,6 +8,7 @@ import com.mrakshay.BookStoreSystem.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedWriter;
@@ -26,6 +27,7 @@ public class ReportServiceImpl implements ReportService {
     @Value("${report.file.path}")
     private String reportFilePath;
 
+    @Cacheable("report")
     @Override
     public BookReportDto generateReport() {
 
